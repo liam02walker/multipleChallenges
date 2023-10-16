@@ -1,0 +1,26 @@
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 20vh;
+}
+header img {
+  max-width: 250px;
+  max-height: 250px;
+}
+.leftContainer {
+  height: 10vh;
+}
+.leftContainer img {
+  height: 100%;
+  width: 250px;
+  margin-top: -50px;
+}
+.rightContainer {
+  height: 10vh;
+}
+.rightContainer img {
+  height: 50px;
+  width: 50px;
+}
