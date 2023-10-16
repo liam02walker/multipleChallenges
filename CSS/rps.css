@@ -1,0 +1,99 @@
+/* Start Screen */
+.startScreen {
+  width: 40vw;
+  height: 45vh;
+  margin-top: 100px;
+  background-color: rgb(139, 198, 129);
+  color: black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  position: relative;
+  left: 30%;
+
+  border: 10px solid rgb(255, 170, 0);
+  border-radius: 50px;
+}
+h1 {
+  font-size: 48px;
+  font-weight: bolder;
+}
+.startButton {
+  background-color: black;
+  width: 30%;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 5px;
+
+  border-radius: 4px;
+  border: 5px double rgb(143, 0, 0);
+}
+.startButton:hover {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  border: 5px double rgb(0, 24, 143);
+}
+
+/* Game Screen */
+.gameScreen {
+  width: 60vw;
+  height: 60vh;
+  background-color: rgb(255, 255, 112);
+  position: absolute;
+  top: 30%;
+  left: 20%;
+
+  display: none;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.leftSide,
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  height: 100%;
+  margin: 0;
+}
+.leftSide img,
+.rightSide img {
+  width: 80%;
+  height: 60%;
+}
+.rightSide img {
+  rotate: 180deg;
+  transform: scaleY(-1);
+
+  position: relative;
+  top: -125px;
+}
+.choiceButtons {
+  display: flex;
+  flex-direction: column;
+}
+.choiceButton {
+  background-color: black;
+  border: 1px solid silver;
+  padding: 3px 8px;
+  font-weight: bold;
+  font-size: 28px;
+  border-radius: 5px;
+}
+.choiceButton:hover {
+  background-color: white;
+  color: black;
+  border-color: black;
+}
+.bothScore {
+  color: black;
+  font-weight: bold;
+  font-size: 40px;
+
+  position: relative;
+  top: 0;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./Images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./CSS/reset.css" />
+    <link rel="stylesheet" href="./CSS/default.css" />
+    <link rel="stylesheet" href="./CSS/rps.css" />
+    <script src="./JS/rps.js" defer></script>
+    <title>Liam's Challenge Week</title>
+  </head>
+  <body>
+    <canvas id="world"></canvas>
+    <header>
+      <div class="leftSide">
+        <img src="./Images/liamLogo.png" alt="Liam's Challenge Week Logo" />
+      </div>
+      <nav class="rightSide">
+        <a class="navButtons" href="./index.html">HOME</a>
+      </nav>
+    </header>
+    <main>
+      <div class="startScreen" id="startScreen">
+        <h1>ARE YOU READY</h1>
+        <button class="startButton" id="gameStart">PLAY</button>
+      </div>
+      <div class="gameScreen" id="gameScreen">
+        <div class="leftSide">
+          <h2 id="playerScore" class="bothScore">Player: 0</h2>
+          <img id="playerChoice" src="./Images/rock.png" alt="Player's Choice Image" />
+          <div class="choiceButtons">
+            <button class="choiceButton" id="rock">ROCK</button>
+            <button class="choiceButton" id="paper">PAPER</button>
+            <button class="choiceButton" id="scissors">SCISSORS</button>
+          </div>
+        </div>
+        <div class="middle">
+          <button class="choiceButton" id="goButton">GO!</button>
+        </div>
+        <div class="rightSide">
+          <h2 id="compScore" class="bothScore">Computer: 0</h2>
+          <img id="compChoice" src="./Images/rock.png" alt="Player's Choice Image" />
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
