@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap");
+
+.calcBG {
+  background-color: rgba(237, 237, 237, 0.47);
+  width: 25vw;
+  height: 60vh;
+  position: absolute;
+  top: 30vh;
+  left: 35vw;
+  border: 3px solid black;
+}
+.inputCalc {
+  width: 100%;
+  height: 25%;
+  background-color: rgba(78, 78, 78, 0.766);
+  color: black;
+  text-align: right;
+  border-bottom: 3px solid black;
+  text-wrap: wrap;
+  overflow: hidden;
+}
+#inputPlacement {
+  padding: 10px;
+  font-size: 24px;
+  text-wrap: wrap;
+  max-width: 90%;
+  font-family: "Orbitron", sans-serif;
+}
+.numContainer {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  height: 74.5%;
+}
+.numButtons {
+  height: fill;
+  color: black;
+  border: 1px solid white;
+  background-color: grey;
+  border-radius: 4px;
+}
+.numButtons:hover {
+  background-color: rgb(178, 178, 178);
+}
+#equalButton {
+  background-color: rgb(29, 29, 29);
+  color: white;
+}
+#equalButton:hover {
+  background-color: white;
+  color: rgb(29, 29, 29);
+}
