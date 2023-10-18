@@ -9,7 +9,7 @@
 
 ---
 
-### Two Sum (completed):
+### Two Sum (completed with stretch goal):
 
 [My Two Sum Page](https://liam02walker.github.io/multipleChallenges/twoSum.html)
 
