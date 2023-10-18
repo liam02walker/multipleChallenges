@@ -74,7 +74,7 @@ function calcFunction(type) {
   } else if (type === deleteButt) {
     outPut = outPut.slice(0, -1);
   } else if (type === equalButt) {
-    // Replacing times and divide to an actual math operator
+    // Replacing to proper math operators
     const outputPattern = /x/gi;
     const replacement = "*";
     const outputPattern2 = /÷/gi;
@@ -91,7 +91,6 @@ function calcFunction(type) {
     const outputResult4 = outputResult3.replace(outputPattern4, replacement4);
     const outputResult5 = outputResult4.replace(outputPattern5, replacement5);
     answer = eval(outputResult5);
-
     // Setting the answer
     outPut = answer;
   } else {

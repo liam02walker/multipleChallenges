@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./Images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./CSS/reset.css" />
+    <link rel="stylesheet" href="./CSS/default.css" />
+    <link rel="stylesheet" href="./CSS/nAndC.css" />
+    <script src="./JS/nAndC.js" defer></script>
+    <title>Liam's Challenge Week</title>
+  </head>
+  <body>
+    <canvas id="world"></canvas>
+    <header>
+      <div class="leftSide">
+        <img src="./Images/liamLogo.png" alt="Liam's Challenge Week Logo" />
+      </div>
+      <nav class="rightSide">
+        <a class="navButtons" href="./index.html">HOME</a>
+      </nav>
+    </header>
+
+    <main>
+      <div id="startGame">
+        <div class="startContainer">
+          <img class="gameImage" src="./Images/redCircle.png" alt="redCircle image" />
+          <div class="centerContainer">
+            <h1 id="playText">PLAY GAME</h1>
+            <div class="choosePlayer">
+              <button id="twoPlayer" class="chooseButton">2 PLAYER</button>
+              <button id="computer" class="chooseButton">COMPUTER</button>
+            </div>
+          </div>
+          <img class="gameImage" src="./Images/redCross.png" alt="redCircle image" />
+        </div>
+      </div>
+      <div id="playGame">
+        <div class="mainContainer">
+          <div class="leftContainer">
+            <h1 class="playerName">PLAYER 1</h1>
+            <h2 class="defPlayer playerTurn">YOUR TURN</h2>
+            <img class="typeImg" src="./Images/redCircle.png" alt="Naughts Image" />
+          </div>
+          <div class="middleContainer">
+            <div class="gameGrid">
+              <div class="gameBoxes">
+                <button class="placeImg" id="box1"></button>
+              </div>
+              <div class="gameBoxes">
+                <button class="placeImg" id="box2"></button>
+              </div>
+              <div class="gameBoxes">
+                <button class="placeImg" id="box3"></button>
+              </div>
+              <div class="gameBoxes">
+                <button class="placeImg" id="box4"></button>
+              </div>
+              <div class="gameBoxes">
+                <button class="placeImg" id="box5"></button>
+              </div>
+              <div class="gameBoxes">
+                <button class="placeImg" id="box6"></button>
+              </div>
+              <div class="gameBoxes">
+                <button class="placeImg" id="box7"></button>
+              </div>
+              <div class="gameBoxes">
+                <button class="placeImg" id="box8"></button>
+              </div>
+              <div class="gameBoxes">
+                <button class="placeImg" id="box9"></button>
+              </div>
+            </div>
+          </div>
+          <div class="rightContainer">
+            <h1 class="playerName" id="otherTeam">PLAYER 2</h1>
+            <h2 class="defPlayer">YOUR TURN</h2>
+            <img class="typeImg" src="./Images/redCross.png" alt="Naughts Image" />
+          </div>
+        </div>
+      </div>
+      <div id="endGame">
+        <div id="wonGame">
+          <h1>YOU WON!</h1>
+        </div>
+        <div id="lostGame">
+          <h1>YOU LOST!</h1>
+        </div>
+        <a href="./nAndC.html" class="homePage">PLAY AGAIN</a>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+/* Start State */
+#startGame {
+  display: block;
+}
+.startContainer {
+  width: 80vw;
+  height: 65vh;
+  background-color: black;
+  position: relative;
+  left: 8%;
+  margin-top: 10px;
+  border: 5px dashed white;
+  padding: 25px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.centerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.gameImage {
+  width: 250px;
+  height: 250px;
+}
+#playText {
+  font-size: 64px;
+  font-weight: bolder;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 50px;
+}
+.chooseButton {
+  background-color: blue;
+  color: rgb(17, 255, 0);
+  border: 2px solid white;
+  border-radius: 8px;
+
+  font-size: 32px;
+  padding: 10px;
+  margin: 5px;
+
+  transition: transform 1s;
+}
+.chooseButton:hover {
+  background-color: greenyellow;
+  color: blue;
+}
+.chooseButton:active {
+  transform: scale(0.5);
+}
+/* Game State */
+#playGame {
+  display: none;
+}
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.leftContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.typeImg {
+  width: 100px;
+  height: 100px;
+  margin-top: 5px;
+}
+
+.playerName {
+  font-size: 48px;
+}
+.defPlayer {
+  display: none;
+}
+.playerTurn {
+  text-align: center;
+  margin-top: 8px;
+  display: block;
+  font-size: 32px;
+  font-weight: bolder;
+
+  border: 2px dotted black;
+  border-radius: 4px;
+  background-color: aquamarine;
+  color: black;
+  padding: 4px;
+}
+
+/* Game Box */
+.gameGrid {
+  margin: 4px;
+  width: 80vh;
+  height: 80vh;
+  background-color: black;
+
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 5px;
+
+  overflow: hidden;
+}
+.gameBoxes {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+.placeImg {
+  position: absolute;
+  height: 187.38px;
+  width: 187.38px;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+}
+#imgPlaced {
+  height: 100%;
+  width: 100%;
+}
+
+/* End of Game */
+#endGame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: black;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+#wonGame {
+  display: none;
+  position: absolute;
+
+  font-size: 128px;
+  font-weight: bolder;
+  background-image: linear-gradient(45deg, #f3ec78, #af4261);
+  background-size: 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#lostGame {
+  display: none;
+  position: absolute;
+
+  font-size: 128px;
+  font-weight: bolder;
+  background-image: linear-gradient(45deg, #f3ec78, #af4261);
+  background-size: 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.homePage {
+  background-color: grey;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 32px;
+
+  position: relative;
+  top: 15%;
+}
