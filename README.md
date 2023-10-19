@@ -27,6 +27,6 @@
 - [Rock-Paper-Scissors](https://liam02walker.github.io/multipleChallenges/rps.html)
 - [Calculator & Make it scientific](https://liam02walker.github.io/multipleChallenges/sciCalc.html)
 - [Naughts & Crosses](https://liam02walker.github.io/multipleChallenges/nAndC.html)
-- [Pong](#)
+- [Pong](https://liam02walker.github.io/multipleChallenges/pong.html)
 - [Whac-A-Mole](#)
 - [Stopwatch](#)

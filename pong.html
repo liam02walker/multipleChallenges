@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./Images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./CSS/reset.css" />
+    <link rel="stylesheet" href="./CSS/default.css" />
+    <link rel="stylesheet" href="./CSS/pong.css" />
+    <script src="./JS/pong.js" defer></script>
+    <title>Liam's Challenge Week</title>
+  </head>
+  <body>
+    <canvas id="world"></canvas>
+    <header>
+      <div class="leftSide">
+        <img src="./Images/liamLogo.png" alt="Liam's Challenge Week Logo" />
+      </div>
+      <nav class="rightSide">
+        <a class="navButtons" href="./index.html">HOME</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="beginContainer" id="beginContainer">
+        <h2>MOVE WITH: W & S</h2>
+        <button class="startGame" id="startButton">START</button>
+      </div>
+      <div class="gameContainer" id="gameContainer">
+        <div class="gameScores">
+          <h1 class="scoreTally" id="playerScore">PLAYER: 0</h1>
+          <h1 class="scoreTally" id="totalScore">FIRST TO 5</h1>
+          <h1 class="scoreTally" id="compScore">COMPUTER: 0</h1>
+        </div>
+        <div class="gameLeft" id="gameLeft"></div>
+        <div class="gameBall" id="gameBall"></div>
+        <div class="gameRight" id="gameRight"></div>
+      </div>
+      <div class="overContainer" id="overContainer">
+        <h1 id="whoWon">GAME OVER!</h1>
+        <button id="restartButton">PLAY AGAIN</button>
+      </div>
+    </main>
+  </body>
+</html>
