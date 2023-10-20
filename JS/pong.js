@@ -1,167 +1,341 @@
-const gameLeft = document.getElementById("gameLeft");
-const gameRight = document.getElementById("gameRight");
-const gameBall = document.getElementById("gameBall");
-const startButton = document.getElementById("startButton");
+// Difficulty Settings
+const easyButton = document.getElementById("easyButton");
+const hardButton = document.getElementById("hardButton");
+const impossibleButton = document.getElementById("impossibleButton");
 
-const playerScore = document.getElementById("playerScore");
-const compScore = document.getElementById("compScore");
-const restartButton = document.getElementById("restartButton");
+easyButton.addEventListener("click", function () {
+  gameDifficulty.Difficulty = "Easy";
+  gameState = "Playing";
+});
+hardButton.addEventListener("click", function () {
+  gameDifficulty.Difficulty = "Hard";
+  gameState = "Playing";
+});
+impossibleButton.addEventListener("click", function () {
+  gameDifficulty.Difficulty = "Impossible";
+  gameState = "Playing";
+});
+
+const gameDifficulty = {
+  Difficulty: "Easy",
+  Easy: {
+    DifficultySpeed: 1,
+    CompSpeed: 1,
+    PlatformSize: 20,
+  },
+  Hard: {
+    DifficultySpeed: 1.5,
+    CompSpeed: 2.5,
+    PlatformSize: 15,
+  },
+  Impossible: {
+    DifficultySpeed: 2,
+    CompSpeed: 5,
+    PlatformSize: 10,
+  },
+};
+
+// Game State
+const paused = document.getElementById("beginContainer");
+const playing = document.getElementById("gameContainer");
+const gameOver = document.getElementById("overContainer");
 const whoWon = document.getElementById("whoWon");
 
-// Game States
-const beginContainer = document.getElementById("beginContainer");
-const gameContainer = document.getElementById("gameContainer");
-const overContainer = document.getElementById("overContainer");
+let gameState = "Paused";
 
-let gameState = "start";
-let gamePoints = {
-  Player: 0,
-  Player2: 0,
-  Computer: 0,
+function myGameState() {
+  if (gameState === "Paused") {
+    paused.style.display = "flex";
+    playing.style.display = "none";
+    gameOver.style.display = "none";
+  } else if (gameState === "Playing") {
+    playing.style.display = "flex";
+    paused.style.display = "none";
+    gameOver.style.display = "none";
+  } else if (gameState === "GameOver") {
+    gameOver.style.display = "flex";
+    playing.style.display = "none";
+    paused.style.display = "none";
+  }
+}
+
+// Playing the game
+const gameBall = document.getElementById("gameBall");
+const playerPlatform = document.getElementById("gameLeft");
+const compPlatform = document.getElementById("gameRight");
+const playerScoreTxt = document.getElementById("playerScore");
+const compScoreTxt = document.getElementById("compScore");
+
+let hitAngle = 1.3;
+
+const myBall = {
+  State: "Left",
+  XPos: 50,
+  YPos: 50,
+  Speed: 0.2,
 };
 
-restartButton.addEventListener("click", function () {
-  gameState = "start";
-});
-
-startButton.addEventListener("click", function () {
-  gameState = "play";
-});
-
-let platform = {
-  PlayerY: 35,
-  Speed: 2,
+const platforms = {
+  Player: {
+    State: "Up",
+    Score: 0,
+    XPos: 35,
+    KeyPress: "w",
+  },
+  Computer: {
+    State: "Up",
+    Score: 0,
+    XPos: 35,
+  },
 };
 
-let ballState = {
-  State: "LeftUp",
-  ballY: 20,
-  ballX: 60,
-  speedHit: 1,
-};
-
+// Move the player
 document.addEventListener("keydown", (keyPress) => {
-  keyIsPressed(keyPress);
+  keyIsPressed(keyPress.key);
 });
-
 function keyIsPressed(event) {
-  if (gameState === "play") {
-    let keyName = event.key;
-    if (keyName === "s") {
-      if (platform.PlayerY < 79) {
-        platform.PlayerY += platform.Speed;
-        gameLeft.style.top = `${platform.PlayerY}%`;
-      } else {
+  if (gameState === "Playing") {
+    if (event === "s") {
+      if (platforms.Player.XPos >= 78) {
         return;
       }
-    } else if (keyName === "w") {
-      if (platform.PlayerY > 1) {
-        platform.PlayerY -= platform.Speed;
-        gameLeft.style.top = `${platform.PlayerY}%`;
-      } else {
+      platforms.Player.XPos += 2;
+      playerPlatform.style.top = `${platforms.Player.XPos}%`;
+      platforms.Player.KeyPress = "s";
+    } else if (event === "w") {
+      if (platforms.Player.XPos <= 1) {
         return;
       }
+      platforms.Player.XPos -= 2;
+      playerPlatform.style.top = `${platforms.Player.XPos}%`;
+      platforms.Player.KeyPress = "w";
     }
   }
 }
 
-function movingBall() {
-  // if hits top
-  if (ballState.ballY <= 0) {
-    if (ballState.State === "LeftUp") {
-      ballState.State = "LeftDown";
-    } else if (ballState.State === "RightUp") {
-      ballState.State = "RightDown";
-    }
-  }
-  // if hits left
-  else if (ballState.ballX <= 0) {
-    ballState.State = "Restart";
-    gamePoints.Computer += 1;
-  }
-  // if hits right
-  else if (ballState.ballX >= 100) {
-    if (ballState.State === "RightUp") {
-      ballState.State = "LeftUp";
-    } else if (ballState.State === "RightDown") {
-      ballState.State = "LeftDown";
+function gamePlaying() {
+  // Difficulty For Each game state
+  if (gameDifficulty.Difficulty === "Easy") {
+    // Platform Sizing
+    playerPlatform.style.height = `${gameDifficulty.Easy.PlatformSize}%`;
+
+    // Computer Moving
+    if (platforms.Computer.XPos <= 1) {
+      platforms.Computer.State = "Down";
+    } else if (platforms.Computer.XPos >= 79) {
+      platforms.Computer.State = "Up";
     }
 
-    // ballState.State = "Restart";
-    // gamePoints.Player += 1;
-  }
-  // if hits bottom
-  else if (ballState.ballY >= 97.5) {
-    if (ballState.State === "LeftDown") {
-      ballState.State = "LeftUp";
-    } else if (ballState.State === "RightDown") {
-      ballState.State = "RightUp";
+    if (platforms.Computer.State === "Up") {
+      platforms.Computer.XPos -= 0.2 * gameDifficulty.Easy.CompSpeed;
+      compPlatform.style.top = `${platforms.Computer.XPos}%`;
+    } else if (platforms.Computer.State === "Down") {
+      platforms.Computer.XPos += 0.2 * gameDifficulty.Easy.CompSpeed;
+      compPlatform.style.top = `${platforms.Computer.XPos}%`;
+    }
+
+    // Ball Moving Directions
+    if (myBall.State === "Left") {
+      myBall.XPos -= myBall.Speed * gameDifficulty.Easy.DifficultySpeed;
+      gameBall.style.left = `${myBall.XPos}%`;
+    } else if (myBall.State === "Right") {
+      myBall.XPos += myBall.Speed * gameDifficulty.Easy.DifficultySpeed;
+      gameBall.style.left = `${myBall.XPos}%`;
+    } else if (myBall.State === "LeftDown") {
+      myBall.XPos -= myBall.Speed * gameDifficulty.Easy.DifficultySpeed;
+      myBall.YPos += myBall.Speed * gameDifficulty.Easy.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
+    } else if (myBall.State === "RightDown") {
+      myBall.XPos += myBall.Speed * gameDifficulty.Easy.DifficultySpeed;
+      myBall.YPos += myBall.Speed * gameDifficulty.Easy.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
+    } else if (myBall.State === "LeftUp") {
+      myBall.XPos -= myBall.Speed * gameDifficulty.Easy.DifficultySpeed;
+      myBall.YPos -= myBall.Speed * gameDifficulty.Easy.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
+    } else if (myBall.State === "RightUp") {
+      myBall.XPos += myBall.Speed * gameDifficulty.Easy.DifficultySpeed;
+      myBall.YPos -= myBall.Speed * gameDifficulty.Easy.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
+    }
+  } else if (gameDifficulty.Difficulty === "Hard") {
+    // Platform Sizing
+    playerPlatform.style.height = `${gameDifficulty.Hard.PlatformSize}%`;
+
+    // Computer Moving
+    if (platforms.Computer.XPos <= 1) {
+      platforms.Computer.State = "Down";
+    } else if (platforms.Computer.XPos >= 79) {
+      platforms.Computer.State = "Up";
+    }
+
+    if (platforms.Computer.State === "Up") {
+      platforms.Computer.XPos -= 0.2 * gameDifficulty.Hard.CompSpeed;
+      compPlatform.style.top = `${platforms.Computer.XPos}%`;
+    } else if (platforms.Computer.State === "Down") {
+      platforms.Computer.XPos += 0.2 * gameDifficulty.Hard.CompSpeed;
+      compPlatform.style.top = `${platforms.Computer.XPos}%`;
+    }
+
+    // Ball Moving Directions
+    if (myBall.State === "Left") {
+      myBall.XPos -= myBall.Speed * gameDifficulty.Hard.DifficultySpeed;
+      gameBall.style.left = `${myBall.XPos}%`;
+    } else if (myBall.State === "Right") {
+      myBall.XPos += myBall.Speed * gameDifficulty.Hard.DifficultySpeed;
+      gameBall.style.left = `${myBall.XPos}%`;
+    } else if (myBall.State === "LeftDown") {
+      myBall.XPos -= myBall.Speed * gameDifficulty.Hard.DifficultySpeed;
+      myBall.YPos += myBall.Speed * gameDifficulty.Hard.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
+    } else if (myBall.State === "RightDown") {
+      myBall.XPos += myBall.Speed * gameDifficulty.Hard.DifficultySpeed;
+      myBall.YPos += myBall.Speed * gameDifficulty.Hard.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
+    } else if (myBall.State === "LeftUp") {
+      myBall.XPos -= myBall.Speed * gameDifficulty.Hard.DifficultySpeed;
+      myBall.YPos -= myBall.Speed * gameDifficulty.Hard.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
+    } else if (myBall.State === "RightUp") {
+      myBall.XPos += myBall.Speed * gameDifficulty.Hard.DifficultySpeed;
+      myBall.YPos -= myBall.Speed * gameDifficulty.Hard.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
+    }
+  } else if (gameDifficulty.Difficulty === "Impossible") {
+    // Platform Sizing
+    playerPlatform.style.height = `${gameDifficulty.Impossible.PlatformSize}%`;
+
+    // Computer Moving
+    if (platforms.Computer.XPos <= 1) {
+      platforms.Computer.State = "Down";
+    } else if (platforms.Computer.XPos >= 79) {
+      platforms.Computer.State = "Up";
+    }
+
+    if (platforms.Computer.State === "Up") {
+      platforms.Computer.XPos -= 0.2 * gameDifficulty.Impossible.CompSpeed;
+      compPlatform.style.top = `${platforms.Computer.XPos}%`;
+    } else if (platforms.Computer.State === "Down") {
+      platforms.Computer.XPos += 0.2 * gameDifficulty.Impossible.CompSpeed;
+      compPlatform.style.top = `${platforms.Computer.XPos}%`;
+    }
+
+    // Ball Moving Directions
+    if (myBall.State === "Left") {
+      myBall.XPos -= myBall.Speed * gameDifficulty.Impossible.DifficultySpeed;
+      gameBall.style.left = `${myBall.XPos}%`;
+    } else if (myBall.State === "Right") {
+      myBall.XPos += myBall.Speed * gameDifficulty.Impossible.DifficultySpeed;
+      gameBall.style.left = `${myBall.XPos}%`;
+    } else if (myBall.State === "LeftDown") {
+      myBall.XPos -= myBall.Speed * gameDifficulty.Impossible.DifficultySpeed;
+      myBall.YPos += myBall.Speed * gameDifficulty.Impossible.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
+    } else if (myBall.State === "RightDown") {
+      myBall.XPos += myBall.Speed * gameDifficulty.Impossible.DifficultySpeed;
+      myBall.YPos += myBall.Speed * gameDifficulty.Impossible.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
+    } else if (myBall.State === "LeftUp") {
+      myBall.XPos -= myBall.Speed * gameDifficulty.Impossible.DifficultySpeed;
+      myBall.YPos -= myBall.Speed * gameDifficulty.Impossible.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
+    } else if (myBall.State === "RightUp") {
+      myBall.XPos += myBall.Speed * gameDifficulty.Impossible.DifficultySpeed;
+      myBall.YPos -= myBall.Speed * gameDifficulty.Impossible.DifficultySpeed * hitAngle;
+      gameBall.style.left = `${myBall.XPos}%`;
+      gameBall.style.top = `${myBall.YPos}%`;
     }
   }
+
+  // Check if the ball has hit the top or bottom
+  if (myBall.YPos <= 1) {
+    if (myBall.State === "LeftUp") {
+      myBall.State = "LeftDown";
+    } else if (myBall.State === "RightUp") {
+      myBall.State = "RightDown";
+    }
+  } else if (myBall.YPos >= 98) {
+    if (myBall.State === "LeftDown") {
+      myBall.State = "LeftUp";
+    } else if (myBall.State === "RightDown") {
+      myBall.State = "RightUp";
+    }
+  }
+  // Check if the ball has hit the left or right
+  if (myBall.XPos <= 0) {
+    platforms.Computer.Score += 1;
+    compScoreTxt.innerText = `COMPUTER: ${platforms.Computer.Score}`;
+    myBall.XPos = 50;
+    myBall.YPos = 50;
+    gameBall.style.top = `${myBall.YPos}%`;
+    gameBall.style.left = `${myBall.XPos}%`;
+    myBall.State = "Left";
+  } else if (myBall.XPos >= 98) {
+    platforms.Player.Score += 1;
+    playerScoreTxt.innerText = `PLAYER: ${platforms.Player.Score}`;
+    myBall.XPos = 50;
+    myBall.YPos = 50;
+    gameBall.style.top = `${myBall.YPos}%`;
+    gameBall.style.left = `${myBall.XPos}%`;
+    myBall.State = "Right";
+  }
+  // Check if the ball has hit the platform
   if (
-    (Math.floor(ballState.ballX) === 1 && Math.floor(ballState.ballY) === platform.PlayerY) ||
-    (Math.floor(ballState.ballX) === 1 && Math.floor(ballState.ballY) <= platform.PlayerY + 20 && Math.floor(ballState.ballY) > platform.PlayerY)
+    Math.floor(myBall.XPos) === 1 &&
+    Math.floor(myBall.YPos) >= platforms.Player.XPos - 1 &&
+    Math.floor(myBall.YPos) <= platforms.Player.XPos + gameDifficulty.Easy.PlatformSize - 1
   ) {
-    if (ballState.State === "LeftUp") {
-      ballState.State = "RightUp";
-    } else if (ballState.State === "LeftDown") {
-      ballState.State = "RightDown";
+    if (platforms.Player.KeyPress === "w") {
+      myBall.State = "RightUp";
+    } else if (platforms.Player.KeyPress === "s") {
+      myBall.State = "RightDown";
     }
   }
-  // Direction to move
-  if (ballState.State === "RightDown") {
-    ballState.ballY += 0.2 * ballState.speedHit;
-    ballState.ballX += 0.2 * ballState.speedHit;
-    gameBall.style.top = `${ballState.ballY}%`;
-    gameBall.style.left = `${ballState.ballX}%`;
-  } else if (ballState.State === "RightUp") {
-    ballState.ballY -= 0.2 * ballState.speedHit;
-    ballState.ballX += 0.2 * ballState.speedHit;
-    gameBall.style.top = `${ballState.ballY}%`;
-    gameBall.style.left = `${ballState.ballX}%`;
-  } else if (ballState.State === "LeftUp") {
-    ballState.ballY -= 0.2 * ballState.speedHit;
-    ballState.ballX -= 0.2 * ballState.speedHit;
-    gameBall.style.top = `${ballState.ballY}%`;
-    gameBall.style.left = `${ballState.ballX}%`;
-  } else if (ballState.State === "LeftDown") {
-    ballState.ballY += 0.2 * ballState.speedHit;
-    ballState.ballX -= 0.2 * ballState.speedHit;
-    gameBall.style.top = `${ballState.ballY}%`;
-    gameBall.style.left = `${ballState.ballX}%`;
-  } else if (ballState.State === "Restart") {
-    ballState.State = "LeftUp";
-    ballState.ballY = 50;
-    ballState.ballX = 50;
+  if (Math.floor(myBall.XPos) === 97 && Math.floor(myBall.YPos) >= platforms.Computer.XPos && Math.floor(myBall.YPos) <= platforms.Computer.XPos + 19) {
+    if (platforms.Computer.State === "Up") {
+      myBall.State = "LeftUp";
+    } else if (platforms.Computer.State === "Down") {
+      myBall.State = "LeftDown";
+    }
   }
-}
 
-function updateScore() {
-  compScore.innerText = `Computer: ${gamePoints.Computer}`;
-  playerScore.innerText = `Player: ${gamePoints.Player}`;
-
-  if (gamePoints.Computer === 5) {
-    gameState = "over";
+  // Check who won the game
+  if (platforms.Computer.Score === 5) {
+    gameState = "GameOver";
     whoWon.innerText = "YOU LOST!";
-  } else if (gamePoints.Player === 5) {
-    gameState = "over";
+  } else if (platforms.Player.Score === 5) {
+    gameState = "GameOver";
     whoWon.innerText = "YOU WON!";
   }
 }
 
-function gameRunning() {
-  if (gameState === "play") {
-    beginContainer.style.display = "none";
-    movingBall();
-    updateScore();
-  } else if (gameState === "start") {
-    beginContainer.style.display = "flex";
-    overContainer.style.display = "none";
-  } else if (gameState === "over") {
-    gamePoints.Computer = 0;
-    gamePoints.Player = 0;
-    overContainer.style.display = "flex";
+// Constant Game Updates
+function gameUpdates() {
+  myGameState();
+  if (gameState === "Playing") {
+    gamePlaying();
   }
 }
+setInterval(gameUpdates, 10);
 
-setInterval(gameRunning, 10);
+// Game Over Screen
+const overButton = document.getElementById("restartButton");
+
+overButton.addEventListener("click", function () {
+  gameState = "Paused";
+  platforms.Player.Score = 0;
+  platforms.Computer.Score = 0;
+  playerScoreTxt.innerText = `PLAYER: ${platforms.Player.Score}`;
+  compScoreTxt.innerText = `PLAYER: ${platforms.Computer.Score}`;
+});

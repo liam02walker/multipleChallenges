@@ -12,6 +12,7 @@ main {
   border: 3px dotted red;
 
   position: absolute;
+  top: 30%;
   z-index: 10;
   padding: 25px;
 
@@ -29,7 +30,7 @@ main {
   color: black;
   border: 2px solid black;
   padding: 16px;
-  font-size: 32px;
+  font-size: 24px;
   border-radius: 16px;
   transition: transform 5s;
 }
